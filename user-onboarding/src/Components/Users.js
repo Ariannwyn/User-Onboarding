@@ -1,16 +1,20 @@
 import React from 'react';
 
 const Users = props => {
-    console.log(typeof props.users)
-    if (props.users === undefined){
+    if (props.users.length === 0){
         return <div></div>
     }
     else{
         return (
-                <div className="card" key={props.users.data.id}>
-                    <h2>{props.users.data.name}</h2>
-                </div> 
-        )
+            props.users.map(user => {
+                return(
+                    <div className="card" key={user.id}>
+                        <h2>{user.name}</h2>
+                    </div> 
+                )
+            }
+        ))        
+        
     }
 }
 

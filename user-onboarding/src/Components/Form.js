@@ -13,26 +13,41 @@ const formSchema = yup.object().shape({
         .required("Email is a required field"),
     role: yup
         .string(),
+    password: yup
+        .string()
+        .required("Please enter a password"),
     terms: yup
         .boolean()
         .oneOf([true], "Please agree to terms of use")
 })
 
 const Form = () => {
-const [userList, setUserList] = useState()
+const [userList, setUserList] = useState([])
 const [users, setUsers] = useState([{ 
     id: '',
     name: "",
     email: "",
     role: "",
+    password: "",
     terms: false
 }])
 
+const initialFormValues = () => {
+   return [{ 
+        id: '',
+        name: "",
+        email: "",
+        role: "",
+        password: "",
+        terms: false
+    }]
+}
 
 const [errorState, setErrorState] = useState({
     name: "",
     email: "",
     role: "",
+    password: "",
     terms: ""
 })
 
@@ -66,45 +81,58 @@ const submitForm = (event) => {
     event.preventDefault(); 
     console.log("form submitted!")
     axios.post("https://reqres.in/api/users", users)
-        .then(response => 
-            setUserList(response),
-            //console.log(response)
-            )
+        .then(response => {
+            const usersFromApi = response.data
+            setUserList([...userList, usersFromApi])
+            console.log(response)
+            setUsers(initialFormValues) //This doesn't work 
+        })
         .catch(error => console.log(error))
   };
 
 return (
     <div>
     <form onSubmit={submitForm}>
-        <label htmlFor="name">Name
+        <label htmlFor="name">Name*
             <input
             id="name"
             type="text"
-            placeholder="Enter name*"
+            placeholder="Enter name"
             name="name"
             value={users.name}
             onChange={handleChanges}
             />
             {errorState.name.length > 0 ? <p className="error">{errorState.name}</p> : null}
         </label>
-        <label htmlFor="email">Email
+        <label htmlFor="email">Email*
             <input
             id="email"
             type="email"
-            placeholder="Enter email*"
+            placeholder="Enter email"
             name="email"
             value={users.email}
             onChange={handleChanges}
             />
             {errorState.email.length > 0 ? <p className="error">{errorState.email}</p> : null}
         </label>
-        <label>
+        <label htmlFor="password">Password*
+            <input
+            id="password"
+            type="password"
+            placeholder="Enter password"
+            name="password"
+            value={users.password}
+            onChange={handleChanges}
+            />
+            {errorState.email.length > 0 ? <p className="error">{errorState.email}</p> : null}
+        </label>
+        <label > What is your role?
             <select 
             value={users.role}
             name="role"
             id="role"
             onChange={handleChanges}>
-                <option value="">What is your role?</option>
+                <option value="">Enter role</option>
                 <option value="Student">Student</option>
                 <option value="Professional">Professional</option>
                 <option value="Instructor">Instructor</option>
