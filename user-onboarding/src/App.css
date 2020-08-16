@@ -1,0 +1,200 @@
+/* @import url('https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap');
+
+html,
+body,
+.App,
+#root {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  /* font-family: 'Patrick Hand', cursive; */
+  /* text-align: center;
+  background-image: linear-gradient(-315deg, #7afcff 40%,#41b6d7 100%);
+  padding: 32px;
+  letter-spacing: 2px
+}
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  background: #ffff88;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12), 0 5px 2px rgba(0, 0, 0, 0.24);
+  width: 100%;
+  max-width: 250px;
+  padding: 10px;
+  margin: 16px auto;
+  text-align: left;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+}
+
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+input, textarea {
+  width: 200px;
+  padding: 15px 22px;
+  margin: 20px 5px;
+  box-sizing: border-box;  
+  border: 1px solid #ff65a3;
+  border-radius: 4px;
+}
+button {
+  background: #ff7eb9;
+  background-image: linear-gradient(-315deg, #ff7eb9 40%,#ff65a3 100%);
+  border: 1px solid #ff65a3;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #191919;
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.12), 0 2px 2px 1px rgba(0, 0, 0, 0.24);
+  transition: all 0.2 ease-in;
+}
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.12), 0 2px 3px 2px rgba(0, 0, 0, 0.24);
+  background: #ff65a3;
+}
+button:active {
+  background: #ff7eb9;
+          box-shadow: inset 0px 0px 5px #ff65a3;
+   outline: none;
+}
+
+label {
+  margin-bottom: -12px;
+  text-align: left;
+  width: 200px;
+}
+
+.error {
+  color: red;
+} */ */
+
+/* Diff CSS */
+
+
+html {
+  font-size: 62.5%;
+}
+
+.App,
+#root {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  background-image: linear-gradient(-315deg, #7afcff 40%,#41b6d7 100%);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px 0;
+  /* font-size: 1.4rem; */
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  margin: 5px 0 0;
+  display: block;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.3s;
+  /* font-size: 1.4rem; */
+  letter-spacing: 0.5px;
+  background-color: white;
+}
+select {
+  height: 40px;
+  width: 325px;
+}
+
+select:focus {
+  outline: none;
+  border-color: #1ee7e2;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1ee7e2;
+}
+
+input:placeholder {
+  color: #a8b2b2;
+}
+
+button {
+  width: 150px;
+  display: inline-block;
+  padding: 8px 11px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  outline: none;
+  background-color: #4dd0e1;
+  background-image: linear-gradient(to right, #4dd0e1, #1ee7e2);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-image: none;
+  background-color: #4dd0e1;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+button:disabled {
+  background-image: none;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.1);
+  cursor: not-allowed;
+}
+
+.error {
+  font-size: 1.2rem;
+  color: red;
+}
+
+.terms {
+  display: inline-block;
+  align-self: self-start;
+}
+
+.terms input {
+  width: 15px;
+  display: inline-block;
+  margin-right: 5px;
+}
