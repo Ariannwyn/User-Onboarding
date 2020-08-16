@@ -19,13 +19,15 @@ const formSchema = yup.object().shape({
 })
 
 const Form = () => {
+const [userList, setUserList] = useState()
 const [users, setUsers] = useState([{ 
+    id: '',
     name: "",
     email: "",
     role: "",
     terms: false
 }])
-console.log(users)
+
 
 const [errorState, setErrorState] = useState({
     name: "",
@@ -56,7 +58,7 @@ const handleChanges = (event) => {
     event.persist()
     validate(event)
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-    setUsers({ ...users, [event.target.name]: event.target.value})
+    setUsers({ ...users, [event.target.name]: event.target.value, id: Date.now()})
     console.log("input changed!", event.target.value)
 };
 
@@ -64,7 +66,10 @@ const submitForm = (event) => {
     event.preventDefault(); 
     console.log("form submitted!")
     axios.post("https://reqres.in/api/users", users)
-        .then(response => console.log(response))
+        .then(response => 
+            setUserList(response),
+            //console.log(response)
+            )
         .catch(error => console.log(error))
   };
 
@@ -117,6 +122,7 @@ return (
         <p>{/*Placeholder*/}</p>
         <button type="submit">Add User</button>
     </form>
+    <Users users={userList} />
     </div>
 )
 }
