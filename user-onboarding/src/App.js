@@ -6,6 +6,7 @@ import Form from './Components/Form'
 function App() {
   return (
     <div className="App">
+      <div className="spacing"></div>
       <Form/>
     </div>
   );

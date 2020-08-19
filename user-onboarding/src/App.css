@@ -118,6 +118,7 @@ label {
   /* font-size: 1.4rem; */
 }
 
+
 input,
 select,
 textarea {
@@ -154,7 +155,6 @@ input:placeholder {
 
 button {
   width: 150px;
-  display: inline-block;
   padding: 8px 11px;
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -166,7 +166,7 @@ button {
   background-image: linear-gradient(to right, #4dd0e1, #1ee7e2);
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.247);
 }
 
 button:hover {
@@ -197,4 +197,30 @@ button:disabled {
   width: 15px;
   display: inline-block;
   margin-right: 5px;
+}
+
+#name, #email, #role, #password{
+  padding: 10px;
+  border-radius: 14px;
+  margin: 10px;
+  border: 0;
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.13);
+}
+
+*:focus {outline:none !important}
+
+
+input {
+  position: relative;
+  vertical-align: middle;
+}
+
+label{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.spacing{
+  padding: 50px;
 }

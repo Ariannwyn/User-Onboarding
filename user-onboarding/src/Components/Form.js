@@ -15,6 +15,7 @@ const formSchema = yup.object().shape({
         .string(),
     password: yup
         .string()
+        .min(6, "Passwords must be at least 6 characters long")
         .required("Please enter a password"),
     terms: yup
         .boolean()
@@ -124,7 +125,7 @@ return (
             value={users.password}
             onChange={handleChanges}
             />
-            {errorState.email.length > 0 ? <p className="error">{errorState.email}</p> : null}
+            {errorState.password.length > 0 ? <p className="error">{errorState.password}</p> : null}
         </label>
         <label > What is your role?
             <select 
@@ -138,17 +139,19 @@ return (
                 <option value="Instructor">Instructor</option>
             </select>
         </label>
-        <label>
+        <label>Terms & Conditions*
             <input 
             type="checkbox" 
             id="terms"
             name="terms"
             checked={users.value}
             onChange={handleChanges}/>
-            Terms & Conditions*
+            {/* {errorState.terms ? <p className="error">{errorState.terms}</p>: null}  THIS IS INCOMPLETE */}
         </label>
         <p>{/*Placeholder*/}</p>
+        <label>
         <button type="submit">Add User</button>
+        </label>
     </form>
     <Users users={userList} />
     </div>
