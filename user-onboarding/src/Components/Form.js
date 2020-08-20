@@ -3,7 +3,11 @@ import Users from './Users'
 import * as yup from 'yup';
 import axios from 'axios';
 
-const formSchema = yup.object().shape({
+//////////////////////
+//  Yup Validation  //
+//////////////////////
+
+const formSchema = yup.object().shape({ 
     name: yup
         .string()
         .required("Name is a required field"),
@@ -22,6 +26,10 @@ const formSchema = yup.object().shape({
         .oneOf([true], "Please agree to terms of use")
         .required("You must accept Terms of Service")
 })
+console.log(formSchema)
+//////////////////////
+//    Form State    //
+//////////////////////
 
 const Form = () => {
     const initialFormValues = {
@@ -35,8 +43,11 @@ const Form = () => {
 const [userList, setUserList] = useState([])
 const [buttonDisabled, setButtonDisabled] = useState(true)
 const [formState, setFormState] = useState(initialFormValues)
-
 const [errorState, setErrorState] = useState({...initialFormValues, terms: ""})
+
+//////////////////////
+//  Event Handlers  //
+//////////////////////
 
 const validate = (event) => {
      yup.reach(formSchema, event.target.name)
@@ -60,7 +71,6 @@ const handleChanges = (event) => {
     event.persist()
     validate(event)
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-    
     setFormState({ ...formState, [event.target.name]: value, id: Date.now()})
     console.log("input changed!", value)
 };
@@ -73,10 +83,14 @@ const submitForm = (event) => {
             const usersFromApi = response.data
             setUserList([...userList, usersFromApi])
             console.log(response)
-            setFormState(initialFormValues) //This doesn't work 
+            setFormState(initialFormValues) 
         })
         .catch(error => console.log(error))
   };
+
+//////////////////////
+//  Button Enabler  //
+//////////////////////
 
 useEffect(() => {
     formSchema.isValid(formState)
@@ -85,7 +99,9 @@ useEffect(() => {
     });
 }, [formState])
 
-
+///////////////////////
+//    Form Layout    //
+///////////////////////
 return (
     <div>
     <form onSubmit={submitForm}>
@@ -139,9 +155,9 @@ return (
             type="checkbox" 
             id="terms"
             name="terms"
-            checked={formState.value}
+            checked={formState.terms}
             onChange={handleChanges}/>
-            {/* {errorState.terms ? null : <p className="error">{errorState.terms}</p>}  */}
+            {errorState.terms ? <p className="error">{errorState.terms}</p> : null} 
         </label>
         <p>{/*Placeholder*/}</p>
         <label>
