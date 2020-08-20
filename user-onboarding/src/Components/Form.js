@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Users from './Users'
 import * as yup from 'yup';
 import axios from 'axios';
@@ -20,37 +20,23 @@ const formSchema = yup.object().shape({
     terms: yup
         .boolean()
         .oneOf([true], "Please agree to terms of use")
+        .required("You must accept Terms of Service")
 })
 
 const Form = () => {
-const [userList, setUserList] = useState([])
-const [users, setUsers] = useState([{ 
-    id: '',
-    name: "",
-    email: "",
-    role: "",
-    password: "",
-    terms: false
-}])
-
-const initialFormValues = () => {
-   return [{ 
+    const initialFormValues = {
         id: '',
         name: "",
         email: "",
         role: "",
         password: "",
         terms: false
-    }]
-}
+     }
+const [userList, setUserList] = useState([])
+const [buttonDisabled, setButtonDisabled] = useState(true)
+const [formState, setFormState] = useState(initialFormValues)
 
-const [errorState, setErrorState] = useState({
-    name: "",
-    email: "",
-    role: "",
-    password: "",
-    terms: ""
-})
+const [errorState, setErrorState] = useState({...initialFormValues, terms: ""})
 
 const validate = (event) => {
      yup.reach(formSchema, event.target.name)
@@ -74,22 +60,31 @@ const handleChanges = (event) => {
     event.persist()
     validate(event)
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-    setUsers({ ...users, [event.target.name]: event.target.value, id: Date.now()})
-    console.log("input changed!", event.target.value)
+    
+    setFormState({ ...formState, [event.target.name]: value, id: Date.now()})
+    console.log("input changed!", value)
 };
 
 const submitForm = (event) => {
     event.preventDefault(); 
     console.log("form submitted!")
-    axios.post("https://reqres.in/api/users", users)
+    axios.post("https://reqres.in/api/users", formState)
         .then(response => {
             const usersFromApi = response.data
             setUserList([...userList, usersFromApi])
             console.log(response)
-            setUsers(initialFormValues) //This doesn't work 
+            setFormState(initialFormValues) //This doesn't work 
         })
         .catch(error => console.log(error))
   };
+
+useEffect(() => {
+    formSchema.isValid(formState)
+    .then(valid => {
+        setButtonDisabled(!valid);
+    });
+}, [formState])
+
 
 return (
     <div>
@@ -98,9 +93,9 @@ return (
             <input
             id="name"
             type="text"
-            placeholder="Enter name"
             name="name"
-            value={users.name}
+            placeholder="Enter name"
+            value={formState.name}
             onChange={handleChanges}
             />
             {errorState.name.length > 0 ? <p className="error">{errorState.name}</p> : null}
@@ -111,7 +106,7 @@ return (
             type="email"
             placeholder="Enter email"
             name="email"
-            value={users.email}
+            value={formState.email}
             onChange={handleChanges}
             />
             {errorState.email.length > 0 ? <p className="error">{errorState.email}</p> : null}
@@ -122,14 +117,14 @@ return (
             type="password"
             placeholder="Enter password"
             name="password"
-            value={users.password}
+            value={formState.password}
             onChange={handleChanges}
             />
             {errorState.password.length > 0 ? <p className="error">{errorState.password}</p> : null}
         </label>
         <label > What is your role?
             <select 
-            value={users.role}
+            value={formState.role}
             name="role"
             id="role"
             onChange={handleChanges}>
@@ -144,13 +139,20 @@ return (
             type="checkbox" 
             id="terms"
             name="terms"
-            checked={users.value}
+            checked={formState.value}
             onChange={handleChanges}/>
-            {/* {errorState.terms ? <p className="error">{errorState.terms}</p>: null}  THIS IS INCOMPLETE */}
+            {/* {errorState.terms ? null : <p className="error">{errorState.terms}</p>}  */}
         </label>
         <p>{/*Placeholder*/}</p>
         <label>
-        <button type="submit">Add User</button>
+        <button 
+            id="button"
+            name="button"
+            value={formState.button}
+            disabled={buttonDisabled} 
+            type="submit">
+            Add User
+        </button>
         </label>
     </form>
     <Users users={userList} />
@@ -159,22 +161,3 @@ return (
 }
 
 export default Form;
-
-{/* 
-FORM LAYOUT
--Name textbox
--Email emailbox
--Password passwordbox
--Terms of Service checkbox
--Submit button
-
-Component <Users users={users}/>
-
-users = {
-    name: 
-    email: 
-    etc
-}
-
-On submit the info gets placed as a new object in array
-*/}
